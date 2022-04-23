@@ -16,42 +16,51 @@ int main()
 
     while(inicio != 3 && continuar != 'n')
     {
-        char palabra_escondida[30], confirmacion = 's', in;
+        char palabra_escondida[30], confirmacion, in;
         char letras_equivocadas[27], letras_ingresadas[27], palabras[4][40];
         int eleccion = 1, contador_equivocadas = 0, contador_repetidos = 0, compr_repetido = 0, vidas = 7;
 
-        system(limpiar);
-        printf(AMARILLO"       Ingrese una opcion\n");
+        //elige una opcion
+        while(confirmacion != 's')
+        {
+            confirmacion = 's';
 
-        printf("----------------------------------");
-        printf("\n| "BLANCO"1"AMARILLO")"BLANCO" Elegir una palabra nueva    "AMARILLO"|");
-        printf("\n| "BLANCO"2"AMARILLO")"BLANCO" Ver historial de partidas   "AMARILLO"|");
-        printf("\n| "BLANCO"3"AMARILLO")"BLANCO" Salir                       "AMARILLO"|");
-        printf("\n----------------------------------");
+            system(limpiar);
+            printf(AMARILLO"       Ingrese una opcion\n");
 
-        printf("\n\n==>"BLANCO" ");
-        scanf("%d", &inicio);
+            printf("----------------------------------");
+            printf("\n| "BLANCO"1"AMARILLO")"BLANCO" Elegir una palabra nueva    "AMARILLO"|");
+            printf("\n| "BLANCO"2"AMARILLO")"BLANCO" Ver historial de partidas   "AMARILLO"|");
+            printf("\n| "BLANCO"3"AMARILLO")"BLANCO" Salir                       "AMARILLO"|");
+            printf("\n----------------------------------");
+
+            printf("\n\n==>"BLANCO" ");
+            scanf("%d", &inicio);
+
+            if(inicio == 1){
+                traducir_archivo(palabras);
+
+                //selecciona la palabra
+                do
+                {
+                    system(limpiar);
+                    printf(AMARILLO"            Eliga una palabra   %d\n", inicio);
+                    printf(BLANCO"\n  "AMARILLO"("BLANCO"1"AMARILLO") "BLANCO"%s "AMARILLO"- ("BLANCO"2"AMARILLO") "BLANCO"%s "AMARILLO"- ("BLANCO"3"AMARILLO") "BLANCO"%s\n\n      "AMARILLO"("BLANCO"4"AMARILLO") "BLANCO"%s "AMARILLO"- ("BLANCO"5"AMARILLO") "BLANCO"%s\n"AMARILLO, palabras[0], palabras[1], palabras[2], palabras[3], palabras[4]);
+                    if(eleccion < 1 && eleccion > 5){
+                        printf(ROJO"\n\n     ** Escribi un numero del 1 al 5 **\n"AMARILLO);
+                    }
+                    printf("\n\n==>"BLANCO" ");
+                    scanf("%d", &eleccion);
+
+                    getchar();
+                    printf(BLANCO"\n\n Estas seguro? "AMARILLO"["BLANCO"S"AMARILLO"/"BLANCO"N"AMARILLO"]:"BLANCO" ");
+                    scanf("%c", &confirmacion);
+                
+                }while(eleccion < 1 && eleccion > 5);
+            }
+        }
 
         if(inicio == 1){
-            traducir_archivo(palabras);
-
-            //selecciona la palabra
-            do
-            {
-                system(limpiar);
-                printf(AMARILLO"            Eliga una palabra\n");
-                printf(BLANCO"\n  "AMARILLO"("BLANCO"1"AMARILLO") "BLANCO"%s "AMARILLO"- ("BLANCO"2"AMARILLO") "BLANCO"%s "AMARILLO"- ("BLANCO"3"AMARILLO") "BLANCO"%s\n\n      "AMARILLO"("BLANCO"4"AMARILLO") "BLANCO"%s "AMARILLO"- ("BLANCO"5"AMARILLO") "BLANCO"%s\n"AMARILLO, palabras[0], palabras[1], palabras[2], palabras[3], palabras[4]);
-                if(eleccion < 1 && eleccion > 5){
-                    printf(ROJO"\n\n     ** Escribi un numero del 1 al 5 **\n"AMARILLO);
-                }
-                printf("\n\n==>"BLANCO" ");
-                scanf("%d", &eleccion);
-
-                getchar();
-                printf(BLANCO"\n\n Estas seguro? "AMARILLO"["BLANCO"S"AMARILLO"/"BLANCO"N"AMARILLO"]:"BLANCO" ");
-                scanf("%c", &confirmacion);
-                
-            }while(eleccion < 1 && eleccion > 5 || confirmacion != 's');
             strcpy(palabra_escondida, palabras[eleccion-1]);
 
             char palabra_descubierta[strlen(palabra_escondida)];
