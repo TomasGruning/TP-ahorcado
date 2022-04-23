@@ -17,7 +17,7 @@ int main()
     while(inicio != 3 && continuar != 'n')
     {
         char palabra_escondida[30], confirmacion = 's', in;
-        char letras_equivocadas[27], letras_ingresadas[27], palabras_random[200][40], palabras[4][40], bufer[30];
+        char letras_equivocadas[27], letras_ingresadas[27], palabras[4][40];
         int eleccion = 1, contador_equivocadas = 0, contador_repetidos = 0, compr_repetido = 0, vidas = 7;
 
         system(limpiar);
@@ -33,7 +33,7 @@ int main()
         scanf("%d", &inicio);
 
         if(inicio == 1){
-            traducir_archivo(palabras_random, palabras);
+            traducir_archivo(palabras);
 
             //selecciona la palabra
             do
@@ -180,19 +180,32 @@ int main()
     return 0;
 }
 
-void traducir_archivo(char random[][40], char pal[][40])
+void traducir_archivo(char pal[][40])
 {
+    long int lineas_restantes = 84747;
+    
     FILE* archivo;
-    archivo = fopen("paises.txt", "r");
-    for(int x=0; !feof(archivo); x++)
-    {
-        fscanf(archivo, "%s", random[x]);
-    }
-    fclose(archivo);
+    archivo = fopen("lemario.txt", "r");
     for(int x=0; x < 5; x++)
     {
-        strcpy(pal[x], random[rand()%196]);
+        char buffer[40];
+        long int saltos_de_linea;
+        if(x == 0){
+            saltos_de_linea = rand()%lineas_restantes;
+        }
+        else{
+            saltos_de_linea = rand()%(lineas_restantes-1)+1;
+        }
+
+        for(int x=0; x < saltos_de_linea; x++)
+        {
+            fgets(buffer, 40, archivo);
+        }
+        buffer[strlen(buffer)-3] = '\0';
+        strcpy(pal[x], buffer);
+        lineas_restantes -= saltos_de_linea;
     }
+    fclose(archivo);
 }
 
 void crear_palabra_desc(char palabraDes[], char palabraEsc[])

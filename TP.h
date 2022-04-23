@@ -10,7 +10,7 @@
 #define AMARILLO    "\x1b[33m"
 #define VERDE       "\x1b[32m"
 
-void traducir_archivo(char random[][40], char pal[][40]);
+void traducir_archivo(char pal[][40]);
 void crear_palabra_desc(char palabraDes[], char palabraEsc[]);
 int remplazar(char palabraEsc[], char palabraDes[], char ing);
 void interfaz(int vid, char palabrasDes[], char palabraEsc[], char palabraDes[]);
