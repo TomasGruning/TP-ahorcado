@@ -77,7 +77,7 @@ int main()
                 scanf("%c", &in);
                 compr_repetido = 0;
 
-                //comprueba si se ingreso una letra
+                //comprueba si se ingreso una letra valida
                 if(in >= 'A' && in && in <= 'Z' || in >= 'a' && in <= 'z'){
                     //comprueba si la letra ya fue ingresada
                     for(int x=0; x < contador_repetidos; x++)
@@ -135,6 +135,7 @@ int main()
             porcentaje[turnos] = (cant_ganadas * 100) / (turnos+1);
             turnos++;
 
+            //genera el historial
             FILE* archivo;
             if(turnos == 1){
                 archivo = fopen("historial.txt", "w+");
