@@ -17,10 +17,12 @@ void crear_palabra_desc(char palabraDes[], char palabraEsc[]);
 
 //remplaza la letra ingresada en los espacios
 int remplazar(char palabraEsc[], char palabraDes[], char ing);
-//imrime el atril con el munieco
-void interfaz(int vid, char palabrasDes[], char palabraEsc[], char palabraDes[]);
-//imprime cuadro de letras equivocadas
-void equivocadas(int cont, char equiv[]);
+//genera cuadro de letras equivocadas
+void interfaz_equivocadas(int cont, char equiv[]);
+//imrime la interfaz del juego
+void interfaz(int cont, char equiv[], int vid, char palabrasDes[], char palabraEsc[], char palabraDes[]);
+//ejecuta las acciones correspondientes si la letra ingresada no esta en la palabra
+void equivocada(char palabraEsc[], char palabraDesc[], char letrasIng[], char letrasEquiv[], int cont_rep, int cont_equiv, int compr_rep, char ingresada, int vid);
 
 //imrime el atril con el munieco
 void historial(int turn, float porcen[], char win[], char palabraEsc[]);

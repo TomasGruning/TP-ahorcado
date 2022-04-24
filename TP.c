@@ -63,6 +63,7 @@ int main()
         if(inicio == 1){
             strcpy(palabra_escondida, palabras[eleccion-1]);
 
+            //prepara la palabra para el juego
             char palabra_descubierta[strlen(palabra_escondida)];
             strcpy(palabra_registro[turnos], palabra_escondida);
             crear_palabra_desc(palabra_descubierta, palabra_escondida);            
@@ -70,8 +71,7 @@ int main()
             //juego
             while(strcmp(palabra_descubierta, palabra_escondida) != 0 && vidas != 0)
             {
-                equivocadas(contador_equivocadas, letras_equivocadas);
-                interfaz(vidas, palabra_descubierta, palabra_escondida, palabra_descubierta);
+                interfaz(contador_equivocadas, letras_equivocadas, vidas, palabra_descubierta, palabra_escondida, palabra_descubierta);
 
                 if(compr_repetido == 1){
                     printf(ROJO"\n\n\n ** La letra ya fue ingresada **"BLANCO);
@@ -88,24 +88,7 @@ int main()
 
                 //comprueba si se ingreso una letra valida
                 if(in >= 'A' && in && in <= 'Z' || in >= 'a' && in <= 'z'){
-                    //comprueba si la letra ya fue ingresada
-                    for(int x=0; x < contador_repetidos; x++)
-                    {
-                        if(letras_ingresadas[x] == in){
-                            compr_repetido = 1;
-                        }
-                    }
-
-                    if(compr_repetido == 0){
-                        letras_ingresadas[contador_repetidos] = in;
-                        contador_repetidos++;
-
-                        if(remplazar(palabra_escondida, palabra_descubierta, in) == 0){
-                            vidas--;
-                            letras_equivocadas[contador_equivocadas] = in;
-                            contador_equivocadas++;
-                        }
-                    }
+                    equivocada(palabra_escondida, palabra_descubierta, letras_ingresadas, letras_equivocadas, contador_repetidos, contador_equivocadas, compr_repetido, in, vidas);
                 }
 
                 else{
@@ -115,11 +98,9 @@ int main()
             }
 
             if(vidas == 0){
-                strcpy(palabra_descubierta, palabra_escondida);
-                
+                strcpy(palabra_descubierta, palabra_escondida);  
             }
-            equivocadas(contador_equivocadas, letras_equivocadas);
-            interfaz(vidas, palabra_descubierta, palabra_escondida, palabra_descubierta);
+            interfaz(contador_equivocadas, letras_equivocadas, vidas, palabra_descubierta, palabra_escondida, palabra_descubierta);
 
             if(vidas != 0){
                 gano[turnos] = 's';
@@ -223,6 +204,7 @@ void crear_palabra_desc(char palabraDes[], char palabraEsc[])
     palabraDes[strlen(palabraEsc)] = '\0';
 }
 
+
 int remplazar(char palabraEsc[], char palabraDes[], char ing)
 {
     int hay=0;
@@ -238,8 +220,40 @@ int remplazar(char palabraEsc[], char palabraDes[], char ing)
     return hay;
 }
 
-void interfaz(int vid, char palabrasDes[], char palabraEsc[], char palabraDes[])
+void interfaz_equivocadas(int cont, char equiv[])
 {
+    //imprime letras equivocadas
+    system(limpiar);
+    printf(AMARILLO" ---------------------------------\n    "BLANCO);
+    for(int x=0; x < cont; x++)
+    {
+        if(x == cont - 1){
+            if(equiv[x] >= 'A' && equiv[x] <= 'Z'){
+                printf("%c", equiv[x]);
+            }
+
+            else{
+                printf("%c", equiv[x] - 32);
+            }
+        }
+
+        else{
+            if(equiv[x] >= 'A' && equiv[x] <= 'Z'){
+                printf("%c - ", equiv[x]);
+            }
+
+            else{
+                printf("%c - ", equiv[x] - 32);
+            }
+        }
+    }
+    printf(AMARILLO"\n ---------------------------------\n\n");
+}
+
+void interfaz(int cont, char equiv[], int vid, char palabrasDes[], char palabraEsc[], char palabraDes[])
+{
+    interfaz_equivocadas(cont, equiv);
+    
     //imprime el monigote
     if(strcmp(palabraDes, palabraEsc) != 0){
         printf(" ------\n");
@@ -310,35 +324,27 @@ void interfaz(int vid, char palabrasDes[], char palabraEsc[], char palabraDes[])
     
 }
 
-void equivocadas(int cont, char equiv[])
+void equivocada(char palabraEsc[], char palabraDesc[], char letrasIng[], char letrasEquiv[], int cont_rep, int cont_equiv, int compr_rep, char ingresada, int vid)
 {
-    //imprime letras equivocadas
-    system(limpiar);
-    printf(AMARILLO" ---------------------------------\n    "BLANCO);
-    for(int x=0; x < cont; x++)
+    for(int x=0; x < cont_rep; x++)
     {
-        if(x == cont - 1){
-            if(equiv[x] >= 'A' && equiv[x] <= 'Z'){
-                printf("%c", equiv[x]);
-            }
-
-            else{
-                printf("%c", equiv[x] - 32);
-            }
-        }
-
-        else{
-            if(equiv[x] >= 'A' && equiv[x] <= 'Z'){
-                printf("%c - ", equiv[x]);
-            }
-
-            else{
-                printf("%c - ", equiv[x] - 32);
-            }
+        if(letrasIng[x] == ingresada){
+            compr_rep = 1;
         }
     }
-    printf(AMARILLO"\n ---------------------------------\n\n");
+
+    if(compr_rep == 0){
+        letrasIng[cont_rep] = ingresada;
+        cont_rep++;
+
+        if(remplazar(palabraEsc, palabraDesc, ingresada) == 0){
+            vid--;
+            letrasEquiv[cont_equiv] = ingresada;
+            cont_equiv++;
+        }
+    }
 }
+
 
 void historial(int turn, float porcen[], char win[], char palabraEsc[])
 {
