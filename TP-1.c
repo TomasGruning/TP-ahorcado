@@ -18,7 +18,7 @@ int main()
     {
         char palabra_escondida[30], confirmacion = 'n', in;
         char letras_equivocadas[27], letras_ingresadas[27], palabras[4][40];
-        int eleccion = 1, contador_equivocadas = 0, contador_ingresadas = 0, compr = 0, vidas = 7;
+        int eleccion = 1, contador_equivocadas = 0, contador_ingresadas = 0, comprobante_equivocada = 0, vidas = 7;
 
         //elige una opcion
         while(confirmacion != 's')
@@ -44,19 +44,21 @@ int main()
                 do
                 {
                     system(limpiar);
-                    printf(AMARILLO"            Eliga una palabra   %d\n", inicio);
+                    printf(AMARILLO"            Eliga una palabra\n");
                     printf(BLANCO"\n  "AMARILLO"("BLANCO"1"AMARILLO") "BLANCO"%s "AMARILLO"- ("BLANCO"2"AMARILLO") "BLANCO"%s "AMARILLO"- ("BLANCO"3"AMARILLO") "BLANCO"%s\n\n      "AMARILLO"("BLANCO"4"AMARILLO") "BLANCO"%s "AMARILLO"- ("BLANCO"5"AMARILLO") "BLANCO"%s\n"AMARILLO, palabras[0], palabras[1], palabras[2], palabras[3], palabras[4]);
-                    if(eleccion < 1 && eleccion > 5){
-                        printf(ROJO"\n\n     ** Escribi un numero del 1 al 5 **\n"AMARILLO);
+                    if(eleccion < 1 || eleccion > 5){
+                        printf(ROJO"\n\n  ** Escribi un numero del 1 al 5 **\n"AMARILLO);
                     }
                     printf("\n\n==>"BLANCO" ");
                     scanf("%d", &eleccion);
 
-                    getchar();
-                    printf(BLANCO"\n\n Estas seguro? "AMARILLO"["BLANCO"S"AMARILLO"/"BLANCO"N"AMARILLO"]:"BLANCO" ");
-                    scanf("%c", &confirmacion);
+                    if(eleccion >= 1 && eleccion <= 5){
+                        getchar();
+                        printf(BLANCO"\n\n Estas seguro? "AMARILLO"["BLANCO"S"AMARILLO"/"BLANCO"N"AMARILLO"]:"BLANCO" ");
+                        scanf("%c", &confirmacion);
+                    }
                 
-                }while(eleccion < 1 && eleccion > 5);
+                }while(eleccion < 1 || eleccion > 5);
             }
         }
 
@@ -73,18 +75,18 @@ int main()
             {
                 interfaz(contador_equivocadas, letras_equivocadas, vidas, palabra_descubierta, palabra_escondida, palabra_descubierta);
 
-                if(compr == 1){
+                if(comprobante_equivocada == 1){
                     printf(ROJO"\n\n\n ** La letra ya fue ingresada **"BLANCO);
                 }
 
-                else if(compr == 2){
+                else if(comprobante_equivocada == 2){
                     printf(ROJO"\n\n\n ** Ingrese una letra **"BLANCO);
                 }
 
                 getchar();
                 printf("\n\n\n escriba una letra: ");
                 scanf("%c", &in);
-                compr = 0;
+                comprobante_equivocada = 0;
 
                 //comprueba si se ingreso una letra valida
                 if(in >= 'A' && in && in <= 'Z' || in >= 'a' && in <= 'z'){
@@ -100,12 +102,12 @@ int main()
                     }
 
                     else{
-                        compr = 1;
+                        comprobante_equivocada = 1;
                     }
                 }
 
                 else{
-                    compr = 2;
+                    comprobante_equivocada = 2;
                 }
 
             }
@@ -195,7 +197,7 @@ void traducir_archivo(char pal[][40])
         {
             fgets(buffer, 40, archivo);
         }
-        buffer[strlen(buffer)-3] = '\0';
+        buffer[strlen(buffer)-2] = '\0';
         strcpy(pal[x], buffer);
         lineas_restantes -= saltos_de_linea;
     }
@@ -268,72 +270,61 @@ void interfaz(int cont, char equiv[], int vid, char palabrasDes[], char palabraE
     interfaz_equivocadas(cont, equiv);
     
     //imprime el monigote
-    if(strcmp(palabraDes, palabraEsc) != 0){
-        printf(" ------\n");
-        printf(" |    |\n");
-    }
+    printf(" ------\n");
+    printf(" |    |\n");
     
-    if(strcmp(palabraDes, palabraEsc) == 0){
-        printf(BLANCO"   \\O/");
-        printf("\n    |");
-        printf("\n   / \\       ");
+    if(vid < 7){
+        if(vid == 0){
+            printf(" |    "BLANCO"X\n");
+        }
+
+        else{
+            printf(" |    "BLANCO"O\n");
+        }
     }
-    
     else{
-        if(vid < 7){
-            if(vid == 0){
-                printf(" |    "BLANCO"X\n");
+        printf(" |    "BLANCO" \n");
+    }
+    if(vid < 6){
+        if(vid < 5){
+            if(vid < 4){
+                printf(AMARILLO" |  "BLANCO" /|\\\n");
             }
 
             else{
-                printf(" |    "BLANCO"O\n");
-            }
-        }
-        else{
-            printf(" |    "BLANCO" \n");
-        }
-        if(vid < 6){
-            if(vid < 5){
-                if(vid < 4){
-                    printf(AMARILLO" |  "BLANCO"/ | \\\n");
-                }
-
-                else{
-                    printf(AMARILLO" |  "BLANCO"  | \\\n");
-                }
-            }
-
-            else{
-                printf(AMARILLO" |  "BLANCO"  |  \n");
-            }
-        }
-        else{
-            printf(AMARILLO" |  "BLANCO"     \n");
-        }
-
-        if(vid < 3){
-            if(vid < 2){
-                printf(AMARILLO" |   "BLANCO"/ \\         ");
-            }
-
-            else{
-                printf(AMARILLO" |   "BLANCO"  \\         ");
+                printf(AMARILLO" |  "BLANCO"  |\\\n");
             }
         }
 
         else{
-            printf(AMARILLO" |   "BLANCO"            ");
+            printf(AMARILLO" |  "BLANCO"  |  \n");
         }
+    }
+    else{
+        printf(AMARILLO" |  "BLANCO"     \n");
+    }
+
+    if(vid < 3){
+        if(vid < 2){
+            printf(AMARILLO" |   "BLANCO"/ \\         ");
+        }
+
+        else{
+            printf(AMARILLO" |   "BLANCO"  \\         ");
+        }
+    }
+
+    else{
+        printf(AMARILLO" |   "BLANCO"            ");
     }
 
     for(int x=0; x < strlen(palabrasDes); x++)
     {
         printf(" %c", palabrasDes[x]);
     }
-    if(strcmp(palabraDes, palabraEsc) != 0){
-        printf(AMARILLO"\n |");
-        printf("\n___________"BLANCO);
-    }
+    
+    printf(AMARILLO"\n |");
+    printf("\n___________"BLANCO);
     
 }
 
