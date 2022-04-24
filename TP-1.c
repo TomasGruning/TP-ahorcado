@@ -18,7 +18,7 @@ int main()
     {
         char palabra_escondida[30], confirmacion = 'n', in;
         char letras_equivocadas[27], letras_ingresadas[27], palabras[4][40];
-        int eleccion = 1, contador_equivocadas = 0, contador_repetidos = 0, compr_repetido = 0, vidas = 7;
+        int eleccion = 1, contador_equivocadas = 0, contador_ingresadas = 0, compr = 0, vidas = 7;
 
         //elige una opcion
         while(confirmacion != 's')
@@ -73,26 +73,39 @@ int main()
             {
                 interfaz(contador_equivocadas, letras_equivocadas, vidas, palabra_descubierta, palabra_escondida, palabra_descubierta);
 
-                if(compr_repetido == 1){
+                if(compr == 1){
                     printf(ROJO"\n\n\n ** La letra ya fue ingresada **"BLANCO);
                 }
 
-                else if(compr_repetido == 2){
+                else if(compr == 2){
                     printf(ROJO"\n\n\n ** Ingrese una letra **"BLANCO);
                 }
 
                 getchar();
                 printf("\n\n\n escriba una letra: ");
                 scanf("%c", &in);
-                compr_repetido = 0;
+                compr = 0;
 
                 //comprueba si se ingreso una letra valida
                 if(in >= 'A' && in && in <= 'Z' || in >= 'a' && in <= 'z'){
-                    equivocada(palabra_escondida, palabra_descubierta, letras_ingresadas, letras_equivocadas, contador_repetidos, contador_equivocadas, compr_repetido, in, vidas);
+                    if(repetida(letras_ingresadas, in, contador_ingresadas) == 0){
+                        letras_ingresadas[contador_ingresadas] = in;
+                        contador_ingresadas++;
+
+                        if(remplazar(palabra_escondida, palabra_descubierta, in) == 0){
+                            vidas--;
+                            letras_equivocadas[contador_equivocadas] = in;
+                            contador_equivocadas++;
+                        }
+                    }
+
+                    else{
+                        compr = 1;
+                    }
                 }
 
                 else{
-                    compr_repetido = 2;
+                    compr = 2;
                 }
 
             }
@@ -324,25 +337,18 @@ void interfaz(int cont, char equiv[], int vid, char palabrasDes[], char palabraE
     
 }
 
-void equivocada(char palabraEsc[], char palabraDesc[], char letrasIng[], char letrasEquiv[], int cont_rep, int cont_equiv, int compr_rep, char ingresada, int vid)
+int repetida(char letrasIng[], char ingresada, int cont_in)
 {
-    for(int x=0; x < cont_rep; x++)
+    int compr = 0;
+    
+    for(int x=0; x < cont_in; x++)
     {
         if(letrasIng[x] == ingresada){
-            compr_rep = 1;
+            compr = 1;
         }
     }
 
-    if(compr_rep == 0){
-        letrasIng[cont_rep] = ingresada;
-        cont_rep++;
-
-        if(remplazar(palabraEsc, palabraDesc, ingresada) == 0){
-            vid--;
-            letrasEquiv[cont_equiv] = ingresada;
-            cont_equiv++;
-        }
-    }
+    return compr;
 }
 
 

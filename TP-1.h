@@ -21,8 +21,8 @@ int remplazar(char palabraEsc[], char palabraDes[], char ing);
 void interfaz_equivocadas(int cont, char equiv[]);
 //imrime la interfaz del juego
 void interfaz(int cont, char equiv[], int vid, char palabrasDes[], char palabraEsc[], char palabraDes[]);
-//ejecuta las acciones correspondientes si la letra ingresada no esta en la palabra
-void equivocada(char palabraEsc[], char palabraDesc[], char letrasIng[], char letrasEquiv[], int cont_rep, int cont_equiv, int compr_rep, char ingresada, int vid);
+//comrueba si la letra ya fue ingresada
+int repetida(char letrasIng[], char ingresada, int cont_in);
 
 //imrime el atril con el munieco
 void historial(int turn, float porcen[], char win[], char palabraEsc[]);
