@@ -1,0 +1,4 @@
+Numero de partida: 1
+Palabra Secreta: zarz
+Partida Ganada?: s
+Estadistica hasta el momento: %100.00

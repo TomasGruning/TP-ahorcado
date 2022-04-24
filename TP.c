@@ -16,7 +16,7 @@ int main()
 
     while(inicio != 3 && continuar != 'n')
     {
-        char palabra_escondida[30], confirmacion, in;
+        char palabra_escondida[30], confirmacion = 'n', in;
         char letras_equivocadas[27], letras_ingresadas[27], palabras[4][40];
         int eleccion = 1, contador_equivocadas = 0, contador_repetidos = 0, compr_repetido = 0, vidas = 7;
 
@@ -145,19 +145,7 @@ int main()
             turnos++;
 
             //genera el historial
-            FILE* archivo;
-            if(turnos == 1){
-                archivo = fopen("historial.txt", "w+");
-                fprintf(archivo, "Numero de partida: %d\n", turnos);
-            }
-            else{
-                archivo = fopen("historial.txt", "a");
-                fprintf(archivo, "\nNumero de partida: %d\n", turnos);
-            }    
-            fprintf(archivo, "Palabra Secreta: %s\n", palabra_escondida);
-            fprintf(archivo, "Partida Ganada?: %c\n",gano[turnos-1]);
-            fprintf(archivo, "Estadistica hasta el momento: %%%.2f\n", porcentaje[turnos-1]);
-            fclose(archivo);
+            historial(turnos, porcentaje, gano, palabra_escondida);
 
         }
 
@@ -166,6 +154,9 @@ int main()
                 system(limpiar);
                 for(int x=0; x < turnos; x++)
                 {
+                    if(x == 0){
+                        printf("\n");
+                    }
                     cuadro(x+1, palabra_registro[x], gano[x], porcentaje[x]);
                     printf("\n\n");
                 }
@@ -348,6 +339,23 @@ void equivocadas(int cont, char equiv[])
         }
     }
     printf(AMARILLO"\n ---------------------------------\n\n");
+}
+
+void historial(int turn, float porcen[], char win[], char palabraEsc[])
+{
+    FILE* archivo;
+    if(turn == 1){
+        archivo = fopen("historial.txt", "w+");
+        fprintf(archivo, "Numero de partida: %d\n", turn);
+    }
+    else{
+        archivo = fopen("historial.txt", "a");
+        fprintf(archivo, "\nNumero de partida: %d\n", turn);
+    }    
+    fprintf(archivo, "Palabra Secreta: %s\n", palabraEsc);
+    fprintf(archivo, "Partida Ganada?: %c\n",win[turn-1]);
+    fprintf(archivo, "Estadistica hasta el momento: %%%.2f\n", porcen[turn-1]);
+    fclose(archivo);
 }
 
 void cuadro(int partida, char palabra[], char gano, float porcentaje)
