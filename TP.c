@@ -144,7 +144,6 @@ int main()
             porcentaje[turnos] = (cant_ganadas * 100) / (turnos+1);
             turnos++;
 
-            //genera el historial
             historial(turnos, porcentaje, gano, palabra_escondida);
 
         }
