@@ -197,7 +197,7 @@ void traducir_archivo(char pal[][40])
         {
             fgets(buffer, 40, archivo);
         }
-        buffer[strlen(buffer)-2] = '\0';
+        buffer[strlen(buffer)-1] = '\0';
         strcpy(pal[x], buffer);
         lineas_restantes -= saltos_de_linea;
     }
