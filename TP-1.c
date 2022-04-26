@@ -17,7 +17,7 @@ int main()
     while(inicio != 3 && continuar != 'n')
     {
         char palabra_escondida[30], confirmacion = 'n', in;
-        char letras_equivocadas[27], letras_ingresadas[27], palabras[4][40];
+        char letras_equivocadas[27], letras_ingresadas[27], palabras[CANT_PALABRAS-1][40];
         int eleccion = 1, contador_equivocadas = 0, contador_ingresadas = 0, comprobante_equivocada = 0, vidas = 7;
 
         //elige una opcion
@@ -44,21 +44,25 @@ int main()
                 do
                 {
                     system(limpiar);
-                    printf(AMARILLO"            Eliga una palabra\n");
-                    printf(BLANCO"\n  "AMARILLO"("BLANCO"1"AMARILLO") "BLANCO"%s "AMARILLO"- ("BLANCO"2"AMARILLO") "BLANCO"%s "AMARILLO"- ("BLANCO"3"AMARILLO") "BLANCO"%s\n\n      "AMARILLO"("BLANCO"4"AMARILLO") "BLANCO"%s "AMARILLO"- ("BLANCO"5"AMARILLO") "BLANCO"%s\n"AMARILLO, palabras[0], palabras[1], palabras[2], palabras[3], palabras[4]);
-                    if(eleccion < 1 || eleccion > 5){
-                        printf(ROJO"\n\n  ** Escribi un numero del 1 al 5 **\n"AMARILLO);
+                    printf("  Eliga una palabra\n");
+                    printf(AMARILLO"------------------------------\n");
+                    for(int x=0; x < CANT_PALABRAS; x++)
+                    {
+                        printf(" "AMARILLO"("BLANCO"%d"AMARILLO") "BLANCO"%s\n", x+1, palabras[x]);
+                    }
+                    if(eleccion < 1 || eleccion > CANT_PALABRAS){
+                        printf(ROJO"\n\n  ** Escribi un numero valido **\n"AMARILLO);
                     }
                     printf("\n\n==>"BLANCO" ");
                     scanf("%d", &eleccion);
 
-                    if(eleccion >= 1 && eleccion <= 5){
+                    if(eleccion >= 1 && eleccion <= CANT_PALABRAS){
                         getchar();
                         printf(BLANCO"\n\n Estas seguro? "AMARILLO"["BLANCO"S"AMARILLO"/"BLANCO"N"AMARILLO"]:"BLANCO" ");
                         scanf("%c", &confirmacion);
                     }
                 
-                }while(eleccion < 1 || eleccion > 5);
+                }while(eleccion < 1 || eleccion > CANT_PALABRAS);
             }
         }
 
@@ -133,7 +137,7 @@ int main()
             }
 
             getchar();
-            printf(BLANCO"\n\nQueres jugar de nuevo? "AMARILLO"["BLANCO"S"AMARILLO"/"BLANCO"N"AMARILLO"]:"BLANCO" ");
+            printf(BLANCO"\n\nVolver al menu? "AMARILLO"["BLANCO"S"AMARILLO"/"BLANCO"N"AMARILLO"]:"BLANCO" ");
             scanf("%c", &continuar);
 
             //calcula porcentaje de ganadas
@@ -178,26 +182,34 @@ int main()
 
 void traducir_archivo(char pal[][40])
 {
-    long int lineas_restantes = 84747;
+    long int lineas_restantes = 84746;
     
     FILE* archivo;
     archivo = fopen("lemario.txt", "r");
-    for(int x=0; x < 5; x++)
+    for(int x=0; x < CANT_PALABRAS; x++)
     {
         char buffer[40];
         long int saltos_de_linea;
+        int probabilidad = rand()%CANT_PALABRAS;
         if(x == 0){
             saltos_de_linea = rand()%lineas_restantes;
         }
         else{
-            saltos_de_linea = rand()%(lineas_restantes-1)+1;
+            if(probabilidad <= CANT_PALABRAS * 0.87){
+                int reducido = lineas_restantes * 0.25;
+                saltos_de_linea = rand()%reducido+1;
+            }
+
+            else{
+                saltos_de_linea = rand()%(lineas_restantes-1)+1;
+            }
         }
 
-        for(int x=0; x < saltos_de_linea; x++)
+        for(int y=0; y < saltos_de_linea; y++)
         {
             fgets(buffer, 40, archivo);
         }
-        buffer[strlen(buffer)-1] = '\0';
+        buffer[strlen(buffer)-2] = '\0';
         strcpy(pal[x], buffer);
         lineas_restantes -= saltos_de_linea;
     }

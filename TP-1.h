@@ -3,12 +3,14 @@
 #include <string.h>
 #include <time.h>
 
-#define limpiar       "clear"
-#define BLANCO      "\x1b[0m"
-#define ROJO        "\x1b[31m"
-#define AZUL        "\x1b[34m"
-#define AMARILLO    "\x1b[33m"
-#define VERDE       "\x1b[32m"
+#define limpiar         "clear"
+#define CANT_PALABRAS       30
+
+#define BLANCO        "\x1b[0m"
+#define ROJO          "\x1b[31m"
+#define AZUL          "\x1b[34m"
+#define AMARILLO      "\x1b[33m"
+#define VERDE         "\x1b[32m"
 
 //lee el lemario y genera las palabra aleatorias
 void traducir_archivo(char pal[][40]);
