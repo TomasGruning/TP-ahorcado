@@ -4,7 +4,7 @@
 #include <time.h>
 
 #define limpiar         "clear"
-#define CANT_PALABRAS       30
+#define CANT_PALABRAS       5
 
 #define BLANCO        "\x1b[0m"
 #define ROJO          "\x1b[31m"

@@ -51,7 +51,7 @@ int main()
                         printf(" "AMARILLO"("BLANCO"%d"AMARILLO") "BLANCO"%s\n", x+1, palabras[x]);
                     }
                     if(eleccion < 1 || eleccion > CANT_PALABRAS){
-                        printf(ROJO"\n\n  ** Escribi un numero valido **\n"AMARILLO);
+                        printf(ROJO"\n  ** Escribi un numero valido **\n"AMARILLO);
                     }
                     printf("\n\n==>"BLANCO" ");
                     scanf("%d", &eleccion);
