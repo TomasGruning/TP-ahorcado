@@ -181,7 +181,7 @@ void traducir_archivo(char pal[][40])
             saltos_de_linea = rand()%lineas_restantes;
         }
         else{
-            int reducido = lineas_restantes / (CANT_PALABRAS * 0.15);
+            int reducido = lineas_restantes / (CANT_PALABRAS * 0.30);
             saltos_de_linea = rand()%reducido+1;
         }
 
