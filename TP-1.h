@@ -22,7 +22,7 @@ void crear_palabra_desc(char palabraDes[], char palabraEsc[]);
 //remplaza la letra ingresada en los espacios
 int remplazar(char palabraEsc[], char palabraDes[], char ing);
 
-//genera cuadro de letras equivocadas
+//genera el cuadro de letras equivocadas
 void interfaz_equivocadas(int cont, char equiv[]);
 
 //imprime la interfaz del juego
@@ -30,6 +30,9 @@ void interfaz(int cont, char equiv[], int vid, char palabrasDes[], char palabraE
 
 //comrueba si la letra ya fue ingresada
 int repetida(char letrasIng[], char ingresada, int cont_in);
+
+//imprime el cuadro de ganar o perder 
+void resultado(int vid, char win[], int turns, int cantGanadas);
 
 
 

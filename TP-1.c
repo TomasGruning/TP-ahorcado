@@ -120,21 +120,7 @@ int main()
                 strcpy(palabra_descubierta, palabra_escondida);  
             }
             interfaz(contador_equivocadas, letras_equivocadas, vidas, palabra_descubierta, palabra_escondida, palabra_descubierta);
-
-            if(vidas != 0){
-                gano[turnos] = 's';
-                cant_ganadas++;
-                printf(AMARILLO"\n\n\n ------------------\n");
-                printf(AMARILLO" |     "BLANCO"GANASTE"AMARILLO"     |");
-                printf("\n ------------------\n");
-            }
-
-            else{
-                gano[turnos] = 'n';
-                printf(ROJO"\n\n\n ------------------\n");
-                printf(ROJO" |    "BLANCO"Perdiste"ROJO"    |");
-                printf("\n ------------------\n");
-            }
+            resultado(vidas, gano, turnos, cant_ganadas);
 
             getchar();
             printf(BLANCO"\n\nVolver al menu? "AMARILLO"["BLANCO"S"AMARILLO"/"BLANCO"N"AMARILLO"]:"BLANCO" ");
@@ -195,14 +181,8 @@ void traducir_archivo(char pal[][40])
             saltos_de_linea = rand()%lineas_restantes;
         }
         else{
-            if(probabilidad <= CANT_PALABRAS * 0.87){
-                int reducido = lineas_restantes * 0.25;
-                saltos_de_linea = rand()%reducido+1;
-            }
-
-            else{
-                saltos_de_linea = rand()%(lineas_restantes-1)+1;
-            }
+            int reducido = lineas_restantes / (CANT_PALABRAS * 0.15);
+            saltos_de_linea = rand()%reducido+1;
         }
 
         for(int y=0; y < saltos_de_linea; y++)
@@ -352,6 +332,24 @@ int repetida(char letrasIng[], char ingresada, int cont_in)
     }
 
     return compr;
+}
+
+void resultado(int vid, char win[], int turns, int cantGanadas)
+{
+    if(vid != 0){
+        win[turns] = 's';
+        cantGanadas++;
+        printf(AMARILLO"\n\n\n ------------------\n");
+        printf(AMARILLO" |     "BLANCO"GANASTE"AMARILLO"     |");
+        printf("\n ------------------\n");
+    }
+
+    else{
+        win[turns] = 'n';
+        printf(ROJO"\n\n\n ------------------\n");
+        printf(ROJO" |    "BLANCO"Perdiste"ROJO"    |");
+        printf("\n ------------------\n");
+    }
 }
 
 
