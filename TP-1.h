@@ -3,9 +3,15 @@
 #include <string.h>
 #include <time.h>
 
-#define limpiar         "clear"
-#define CANT_PALABRAS       5
+#ifdef _WIN32
+    #define limpiar   "cls"
+    #define LIMTE      1
+#else
+    #define limpiar   "clear"
+    #define LIMTE      2
+#endif
 
+#define CANT_PALABRAS      5
 #define BLANCO        "\x1b[0m"
 #define ROJO          "\x1b[31m"
 #define AZUL          "\x1b[34m"

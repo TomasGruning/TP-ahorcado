@@ -51,9 +51,9 @@ int main()
                         printf(" "AMARILLO"("BLANCO"%d"AMARILLO") "BLANCO"%s\n", x+1, palabras[x]);
                     }
                     if(eleccion < 1 || eleccion > CANT_PALABRAS){
-                        printf(ROJO"\n  ** Escribi un numero valido **\n"AMARILLO);
+                        printf(ROJO"\n  ** Escribi un numero valido **\n");
                     }
-                    printf("\n\n==>"BLANCO" ");
+                    printf(AMARILLO"\n\n==>"BLANCO" ");
                     scanf("%d", &eleccion);
 
                     if(eleccion >= 1 && eleccion <= CANT_PALABRAS){
@@ -189,7 +189,7 @@ void traducir_archivo(char pal[][40])
         {
             fgets(buffer, 40, archivo);
         }
-        buffer[strlen(buffer)-2] = '\0';
+        buffer[strlen(buffer)-LIMTE] = '\0';
         strcpy(pal[x], buffer);
         lineas_restantes -= saltos_de_linea;
     }
