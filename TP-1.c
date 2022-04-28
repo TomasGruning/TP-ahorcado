@@ -41,28 +41,21 @@ int main()
                 traducir_archivo(palabras);
 
                 //selecciona la palabra
-                do
+                system(limpiar);
+                printf("  Eliga una palabra\n");
+                printf(AMARILLO"------------------------------\n");
+                for(int x=0; x < CANT_PALABRAS; x++)
                 {
-                    system(limpiar);
-                    printf("  Eliga una palabra\n");
-                    printf(AMARILLO"------------------------------\n");
-                    for(int x=0; x < CANT_PALABRAS; x++)
-                    {
-                        printf(" "AMARILLO"("BLANCO"%d"AMARILLO") "BLANCO"%s\n", x+1, palabras[x]);
-                    }
-                    if(eleccion < 1 || eleccion > CANT_PALABRAS){
-                        printf(ROJO"\n  ** Escribi un numero valido **\n");
-                    }
-                    printf(AMARILLO"\n\n==>"BLANCO" ");
-                    scanf("%d", &eleccion);
+                    printf(" "AMARILLO"("BLANCO"%d"AMARILLO") "BLANCO"%s\n", x+1, palabras[x]);
+                }
+                printf(AMARILLO"\n\n==>"BLANCO" ");
+                scanf("%d", &eleccion);
 
-                    if(eleccion >= 1 && eleccion <= CANT_PALABRAS){
-                        getchar();
-                        printf(BLANCO"\n\n Estas seguro? "AMARILLO"["BLANCO"S"AMARILLO"/"BLANCO"N"AMARILLO"]:"BLANCO" ");
-                        scanf("%c", &confirmacion);
-                    }
-                
-                }while(eleccion < 1 || eleccion > CANT_PALABRAS);
+                if(eleccion >= 1 && eleccion <= CANT_PALABRAS){
+                    getchar();
+                    printf(BLANCO"\n\n Estas seguro? "AMARILLO"["BLANCO"S"AMARILLO"/"BLANCO"N"AMARILLO"]:"BLANCO" ");
+                    scanf("%c", &confirmacion);
+                }
             }
         }
 

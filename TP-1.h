@@ -38,7 +38,6 @@ void interfaz(int cont, char equiv[], int vid, char palabrasDes[], char palabraE
 int repetida(char letrasIng[], char ingresada, int cont_in);
 
 
-
 //modifica el archivo con el historial de partidas
 void historial(int turn, float porcen[], char win[], char palabraEsc[]);
 
