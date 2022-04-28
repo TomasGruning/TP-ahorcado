@@ -37,9 +37,6 @@ void interfaz(int cont, char equiv[], int vid, char palabrasDes[], char palabraE
 //comrueba si la letra ya fue ingresada
 int repetida(char letrasIng[], char ingresada, int cont_in);
 
-//imprime el cuadro de ganar o perder 
-void resultado(int vid, char win[], int turns, int cantGanadas);
-
 
 
 //modifica el archivo con el historial de partidas

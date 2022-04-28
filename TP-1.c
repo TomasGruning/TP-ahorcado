@@ -120,7 +120,22 @@ int main()
                 strcpy(palabra_descubierta, palabra_escondida);  
             }
             interfaz(contador_equivocadas, letras_equivocadas, vidas, palabra_descubierta, palabra_escondida, palabra_descubierta);
-            resultado(vidas, gano, turnos, cant_ganadas);
+            
+            //resultado
+            if(vidas != 0){
+                gano[turnos] = 's';
+                cant_ganadas++;
+                printf(AMARILLO"\n\n\n ------------------\n");
+                printf(AMARILLO" |     "BLANCO"GANASTE"AMARILLO"     |");
+                printf("\n ------------------\n");
+            }
+
+            else{
+                gano[turnos] = 'n';
+                printf(ROJO"\n\n\n ------------------\n");
+                printf(ROJO" |    "BLANCO"Perdiste"ROJO"    |");
+                printf("\n ------------------\n");
+            }
 
             getchar();
             printf(BLANCO"\n\nVolver al menu? "AMARILLO"["BLANCO"S"AMARILLO"/"BLANCO"N"AMARILLO"]:"BLANCO" ");
@@ -334,24 +349,6 @@ int repetida(char letrasIng[], char ingresada, int cont_in)
     return compr;
 }
 
-void resultado(int vid, char win[], int turns, int cantGanadas)
-{
-    if(vid != 0){
-        win[turns] = 's';
-        cantGanadas++;
-        printf(AMARILLO"\n\n\n ------------------\n");
-        printf(AMARILLO" |     "BLANCO"GANASTE"AMARILLO"     |");
-        printf("\n ------------------\n");
-    }
-
-    else{
-        win[turns] = 'n';
-        printf(ROJO"\n\n\n ------------------\n");
-        printf(ROJO" |    "BLANCO"Perdiste"ROJO"    |");
-        printf("\n ------------------\n");
-    }
-}
-
 
 void historial(int turn, float porcen[], char win[], char palabraEsc[])
 {
@@ -370,10 +367,10 @@ void historial(int turn, float porcen[], char win[], char palabraEsc[])
     fclose(archivo);
 }
 
-void cuadro(int partida, char palabra[], char gano, float porcentaje)
+void cuadro(int partida, char palabra[], char win, float porcen)
 {
     printf(AMARILLO"  Numero de partida:  "BLANCO"%d                            "AMARILLO"", partida);
     printf("\n  Palabra Secreta:  "BLANCO"%s                          "AMARILLO"\n", palabra);
-    printf("  Partida Ganada?:  "BLANCO"%c                              "AMARILLO"\n", gano);
-    printf("  Estadistica hasta el momento: "BLANCO"%%%.2f           "AMARILLO"", porcentaje);
+    printf("  Partida Ganada?:  "BLANCO"%c                              "AMARILLO"\n", win);
+    printf("  Estadistica hasta el momento: "BLANCO"%%%.2f           "AMARILLO"", porcen);
 }
