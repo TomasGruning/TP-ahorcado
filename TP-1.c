@@ -2,9 +2,6 @@
 
 int main()
 {
-    srand(time(NULL));
-    system(limpiar);
-
     char continuar = 's';
     int inicio = 1; 
     
@@ -86,7 +83,7 @@ int main()
                 comprobante_equivocada = 0;
 
                 //comprueba si se ingreso una letra valida
-                if(in >= 'A' && in && in <= 'Z' || in >= 'a' && in <= 'z'){
+                if(in >= 'A' &&  in <= 'Z' || in >= 'a' && in <= 'z'){
                     if(repetida(letras_ingresadas, in, contador_ingresadas) == 0){
                         letras_ingresadas[contador_ingresadas] = in;
                         contador_ingresadas++;
