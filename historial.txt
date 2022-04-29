@@ -1,0 +1,4 @@
+Numero de partida: 1
+Palabra Secreta: cerreta
+Partida Ganada?: n
+Estadistica hasta el momento: %0.00

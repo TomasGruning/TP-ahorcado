@@ -2,9 +2,6 @@
 
 int main()
 {
-    srand(time(NULL));
-    system(limpiar);
-
     char continuar = 's';
     int inicio = 1; 
     
