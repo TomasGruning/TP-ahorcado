@@ -17,7 +17,7 @@ int main()
     while(inicio != 3 && continuar != 'n')
     {
         char palabra_escondida[30], confirmacion = 'n', in;
-        char letras_equivocadas[27], letras_ingresadas[27], palabras[CANT_PALABRAS-1][40];
+        char letras_equivocadas[27], letras_ingresadas[27], palabras[CANT_PALABRAS][40];
         int eleccion = 1, contador_equivocadas = 0, contador_ingresadas = 0, comprobante_equivocada = 0, vidas = 7;
 
         //elige una opcion
