@@ -2,6 +2,8 @@
 
 int main()
 {
+    srand(time(NULL));
+    
     char continuar = 's';
     int inicio = 1; 
     
@@ -13,9 +15,11 @@ int main()
 
     while(inicio != 3 && continuar != 'n')
     {
-        char palabra_escondida[30], confirmacion = 'n', in;
-        char letras_equivocadas[27], letras_ingresadas[27], palabras[CANT_PALABRAS][40];
+        char confirmacion = 'n';
+        char letras_equivocadas[27], letras_ingresadas[27], in;
         int eleccion = 1, contador_equivocadas = 0, contador_ingresadas = 0, comprobante_equivocada = 0, vidas = 7;
+
+        char* palabras[CANT_PALABRAS], * palabra_escondida;
 
         //elige una opcion
         while(confirmacion != 's')
@@ -57,7 +61,10 @@ int main()
         }
 
         if(inicio == 1){
+            palabra_escondida = malloc(sizeof(char)*strlen(palabras[eleccion-1]+1));
             strcpy(palabra_escondida, palabras[eleccion-1]);
+            for(int x=0; x < CANT_PALABRAS; free(palabras[x++]));
+            free(palabras);
 
             //prepara la palabra para el juego
             char palabra_descubierta[strlen(palabra_escondida)];
@@ -67,7 +74,7 @@ int main()
             //juego
             while(strcmp(palabra_descubierta, palabra_escondida) != 0 && vidas != 0)
             {
-                interfaz(contador_equivocadas, letras_equivocadas, vidas, palabra_descubierta, palabra_escondida, palabra_descubierta);
+                interfaz(contador_equivocadas, letras_equivocadas, vidas, palabra_descubierta);
 
                 if(comprobante_equivocada == 1){
                     printf(ROJO"\n\n\n ** La letra ya fue ingresada **"BLANCO);
@@ -84,6 +91,7 @@ int main()
 
                 //comprueba si se ingreso una letra valida
                 if(in >= 'A' &&  in <= 'Z' || in >= 'a' && in <= 'z'){
+
                     if(repetida(letras_ingresadas, in, contador_ingresadas) == 0){
                         letras_ingresadas[contador_ingresadas] = in;
                         contador_ingresadas++;
@@ -109,7 +117,7 @@ int main()
             if(vidas == 0){
                 strcpy(palabra_descubierta, palabra_escondida);  
             }
-            interfaz(contador_equivocadas, letras_equivocadas, vidas, palabra_descubierta, palabra_escondida, palabra_descubierta);
+            interfaz(contador_equivocadas, letras_equivocadas, vidas, palabra_descubierta);
             
             //resultado
             if(vidas != 0){
@@ -153,6 +161,7 @@ int main()
 
                 getchar();
                 printf(BLANCO"\n Volver al menu? "AMARILLO"["BLANCO"S"AMARILLO"/"BLANCO"N"AMARILLO"]:"BLANCO" ");
+
                 scanf("%c", &continuar);
             }
 
@@ -171,7 +180,7 @@ int main()
     return 0;
 }
 
-void traducir_archivo(char pal[][40])
+void traducir_archivo(char * pal[])
 {
     long int lineas_restantes = 84746;
     
@@ -195,13 +204,14 @@ void traducir_archivo(char pal[][40])
             fgets(buffer, 40, archivo);
         }
         buffer[strlen(buffer)-LIMTE] = '\0';
-        strcpy(pal[x], buffer);
+        pal[x] = malloc(sizeof(char)*(strlen(buffer)+1));
+        strcpy(pal[x], buffer); 
         lineas_restantes -= saltos_de_linea;
     }
     fclose(archivo);
 }
 
-void crear_palabra_desc(char palabraDes[], char palabraEsc[])
+void crear_palabra_desc(char palabraDes[], char* palabraEsc)
 {
     for(int x=0; x < strlen(palabraEsc); x++)
     {
@@ -217,7 +227,7 @@ void crear_palabra_desc(char palabraDes[], char palabraEsc[])
 }
 
 
-int remplazar(char palabraEsc[], char palabraDes[], char ing)
+int remplazar(char* palabraEsc, char palabraDes[], char ing)
 {
     int hay=0;
 
@@ -262,7 +272,7 @@ void interfaz_equivocadas(int cont, char equiv[])
     printf(AMARILLO"\n ---------------------------------\n\n");
 }
 
-void interfaz(int cont, char equiv[], int vid, char palabrasDes[], char palabraEsc[], char palabraDes[])
+void interfaz(int cont, char equiv[], int vid, char palabrasDes[])
 {
     interfaz_equivocadas(cont, equiv);
     
@@ -340,7 +350,7 @@ int repetida(char letrasIng[], char ingresada, int cont_in)
 }
 
 
-void historial(int turn, float porcen[], char win[], char palabraEsc[])
+void historial(int turn, float porcen[], char win[], char* palabraEsc)
 {
     FILE* archivo;
     if(turn == 1){
