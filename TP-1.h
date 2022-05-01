@@ -2,14 +2,15 @@
 #include <stdlib.h>
 #include <string.h>
 #include <time.h>
-#include <assert.h>
 
 #ifdef _WIN32
     #define limpiar   "cls"
     #define LIMTE      1
+    #define FREE    "free(palabras)"
 #else
     #define limpiar   "clear"
     #define LIMTE      2
+    #define FREE       ""
 #endif
 
 #define CANT_PALABRAS      5

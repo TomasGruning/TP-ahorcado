@@ -66,7 +66,7 @@ int main()
             palabra_escondida = malloc(sizeof(char)*strlen(palabras[eleccion-1]+1));
             strcpy(palabra_escondida, palabras[eleccion-1]);
             for(int x=0; x < CANT_PALABRAS; free(palabras[x++]));
-            free(palabras);
+            FREE;
 
             //prepara la palabra para el juego
             char* palabra_descubierta;
@@ -360,7 +360,6 @@ void historial(int turn, float porcen[], char win[], char palabraReg[][40])
 {
     FILE* archivo;
     archivo = fopen("historial.txt", "w+");
-    assert(archivo != NULL);
     fprintf(archivo, "Numero de partida: 1\n");
     fprintf(archivo, "Palabra Secreta: %s\n", palabraReg[0]);
     fprintf(archivo, "Partida Ganada?: %c\n",win[0]);
